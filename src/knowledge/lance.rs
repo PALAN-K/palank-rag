@@ -264,8 +264,10 @@ impl VectorStore for LanceVectorStore {
         // 삭제 전 개수 확인
         let before_count = self.count().await?;
 
+        // doc_id는 i64 타입으로 검증됨 - SQL 인젝션 방지
+        let filter = format!("doc_id = {}", doc_id as i64);
         table
-            .delete(&format!("doc_id = {}", doc_id))
+            .delete(&filter)
             .await
             .context("Failed to delete vectors")?;
 
@@ -301,8 +303,10 @@ impl VectorStore for LanceVectorStore {
             .await
             .context("Failed to open table")?;
 
+        // doc_id는 i64 타입으로 검증됨 - SQL 인젝션 방지
+        let filter = format!("doc_id = {}", doc_id as i64);
         let count = table
-            .count_rows(Some(format!("doc_id = {}", doc_id)))
+            .count_rows(Some(filter))
             .await
             .context("Failed to count rows for doc_id")?;
 

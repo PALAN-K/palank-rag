@@ -266,7 +266,6 @@ impl EmbeddingProvider for GeminiEmbedding {
             output_dimensionality: Some(self.dimension),
         };
 
-        let url = format!("{}?key={}", GEMINI_EMBED_URL, self.api_key);
         let mut last_error: Option<anyhow::Error> = None;
 
         // 재시도 루프 (429 에러 시 지수 백오프)
@@ -277,8 +276,15 @@ impl EmbeddingProvider for GeminiEmbedding {
                 limiter.acquire().await;
             }
 
-            // API 호출
-            let response = match self.client.post(&url).json(&request).send().await {
+            // API 호출 (API 키는 URL이 아닌 헤더로 전송 - 보안 강화)
+            let response = match self
+                .client
+                .post(GEMINI_EMBED_URL)
+                .header("x-goog-api-key", &self.api_key)
+                .json(&request)
+                .send()
+                .await
+            {
                 Ok(resp) => resp,
                 Err(e) => {
                     last_error = Some(anyhow::anyhow!("Failed to send embedding request: {}", e));

@@ -6,12 +6,16 @@
 //! source: D:\010 Web Applicaton\PALAN-K-palank-rag
 
 pub mod cli;
+pub mod collector;
 pub mod embedding;
+pub mod extractor;
 pub mod knowledge;
 pub mod scraper;
 
 // Re-exports
+pub use collector::{CollectedFile, CollectionStats, CollectorConfig, FileCollector, FileType};
 pub use embedding::{EmbeddingProvider, GeminiEmbedding, get_api_key, has_api_key};
+pub use extractor::{ContentExtractor, ContentMetadata, ExtractedContent};
 pub use knowledge::{
     ChunkConfig, Chunker, Document, FtsSearchResult, HybridRetriever, HybridSearchResult,
     HybridStats, KnowledgeStore, LanceVectorStore, MarkdownChunker, NewDocument, SearchMethod,
