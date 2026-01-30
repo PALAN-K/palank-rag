@@ -1,0 +1,13 @@
+{
+  "name": "palank-rag",
+  "description": "로컬 하이브리드 RAG 시스템 - LanceDB 벡터 검색 + FTS5 키워드 검색",
+  "version": "0.1.0",
+  "author": {
+    "name": "PALAN-K"
+  },
+  "homepage": "https://github.com/PALAN-K/palank-rag",
+  "repository": "https://github.com/PALAN-K/palank-rag",
+  "license": "MIT",
+  "keywords": ["rag", "vector-search", "lancedb", "fts5", "hybrid-search", "local"],
+  "category": "knowledge-management"
+}
